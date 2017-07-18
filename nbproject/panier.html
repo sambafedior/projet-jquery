@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Panier</title>
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+</head>
+
+<body class="container-fluid">
+
+<div class="row">
+
+    <div class="col-md-6 col-md-offser-3">
+
+        <form id="form">
+            <div class="form-group">
+                <label for="designation" >designation</label>
+                <input type="text" id="designation" class="form-control" required>
+            </div>
+
+            <div class="col-md-6 form-group">
+                <label for="pu">pu</label>
+                <input type="number" id="pu" class="form-control" required>
+            </div>
+
+
+            <div class="col-md-6 form-group">
+                <label for="qte">qte</label>
+                <input type="number" id="qte" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-block btn-danger">Valider</button>
+            </div>
+
+        </form>
+
+        <table class="table" id="panier">
+            <thead>
+
+            <tr>
+                <th>Désignation</th>
+                <th>Prix Unitaire</th>
+                <th>Quantité</th>
+                <th>total</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+
+
+</div>
+
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+
+
+        var $form = $("#form");
+
+        function ajoutProduit(e) {
+            console.log("test");
+
+            //récupération des donnéés saisie
+            e.preventDefault();
+            //evite de rechargement de la page à la validation du formulaire
+            var designation = $('#designation').val();
+            var pu = $("#pu").val();
+            var qte = $("#qte").val();
+            var total = pu * qte;
+
+            //insertion de la nouvelle ligne
+
+            var $tr = $("<tr>");
+
+            $("<td>").text(designation).appendTo($tr);
+            $("<td>").text(pu).appendTo($tr);
+            $("<td>").text(qte).appendTo($tr);
+            $("<td>").text(total).appendTo($tr);
+
+            $("#panier tbody").append($tr);
+        }
+
+        $form.submit(ajoutProduit);
+    });
+</script>
+</body>
+</html>
