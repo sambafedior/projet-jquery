@@ -1,10 +1,14 @@
 <!DOCTYPE html>
+
 <html lang="fr">
+
 <head>
+
     <meta charset="UTF-8">
     <title>Panier</title>
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+
 </head>
 
 <body class="container-fluid">
@@ -44,11 +48,20 @@
                 <th>Prix Unitaire</th>
                 <th>Quantité</th>
                 <th>total</th>
+                <th>Action</th>
             </tr>
             </thead>
             <tbody>
 
             </tbody>
+
+            <tfoot>
+            <tr>
+                <td colspan="3">Total</td>
+                <td  id="total-panier" colspan="3"> </td>
+
+            </tr>
+            </tfoot>
         </table>
     </div>
 
@@ -64,9 +77,10 @@
 
 
         var $form = $("#form");
+        var $panier = $("#panier");
 
         function ajoutProduit(e) {
-            console.log("test");
+
 
             //récupération des donnéés saisie
             e.preventDefault();
@@ -85,11 +99,51 @@
             $("<td>").text(qte).appendTo($tr);
             $("<td>").text(total).appendTo($tr);
 
-            $("#panier tbody").append($tr);
+            //ajouter un element pour la suppréssion
+            var $btSuprr = $("<button>").attr({
+                type: "button",
+                class: "btn btn-danger glyphicon glyphicon-trash",
+                title: "Supprimer ce produit"
+            });
+
+            $("<td>").attr("class", "suprr").append($btSuprr).appendTo($tr);
+            $("#panier").find("tbody").append($tr);
+
+            calculerTotal();
         }
 
+        function supprimerProduit(e) {
+            $(this).closest("tr").remove();
+            calculerTotal();
+        }
+
+
+        function calculerTotal() {
+
+            var $colonneTotal = $("#panier tbody tr td:nth-of-type(4n)");
+            var total = $colonneTotal
+                .toArray()
+                .map(function (item) {
+                    return item.textContent;
+                })
+                .reduce(function (total, val) {
+                    return parseFloat(total) + parseFloat(val);
+                });
+
+            $("#total-panier").text(total);
+
+        }
+        //liaison avec l'evenement ajout produits
+
+        $panier.delegate(".glyphicon-trash", "click", supprimerProduit);
+
         $form.submit(ajoutProduit);
+
     });
+
+
 </script>
+
 </body>
+
 </html>
