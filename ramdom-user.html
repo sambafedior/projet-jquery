@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Single Page Application</title>
+
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+</head>
+<body class="container-fluid">
+
+<div class="col-md-6">
+
+<img src="" id="photo">
+
+</img>
+
+<div class="table-responsive" id="user" >
+
+
+</div>
+
+    <div class="table-responsive" id="adresse" >
+
+
+    </div>
+
+    <div class="table-responsive" id="tel" >
+
+
+    </div>
+
+</div>
+
+
+
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script>
+
+    $.get("https://randomuser.me/api", function (response) {
+console.log(response);
+        var data = response.results[0];
+
+        var info = "name: " +data.name.first;
+        var adresse = "adresse: " +data.location.street;
+        var tel = "tel: " +data.cell;
+        var photo = data.picture.large;
+
+        $("#user").html(info);
+        $("#adresse").html(adresse);
+        $("#tel").html(tel);
+        $("#photo").attr("src", photo);
+    })
+
+   $(document).ready(response)function response() {
+        
+    }
+</script>
+</body>
+</html>

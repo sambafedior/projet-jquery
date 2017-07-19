@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Single Page Application</title>
+
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+</head>
+<body class="container-fluid">
+
+<div class="row">
+
+    <nav class="col-md-3">
+        <ul class="nav">
+            <li class="nav-pills" data-link="home" data-target="fr"> <a>Acceuil</a> </li>
+            <li class="nav-pills" data-link="home" data-target="en"> <a>Home</a> </li>
+            <li class="nav-pills" data-link="contact"> <a>Contact</a> </li>
+        </ul>
+
+    </nav>
+
+    <section class="col-md-9" id="content">
+
+    </section>
+
+
+</div>
+
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script>
+    function loadContent($content, link, innerTarget) {
+        var url = "fragment/"+link+".fragment.html";
+        if(innerTarget){
+            url = url+" #"+innerTarget
+        }
+        $content.load("fragment/"+link+".fragment.html", function () {
+            $(this).fadeOut(300).fadeIn(300);
+        });
+    }
+    $(document).ready(function () {
+       var $content = $("#content");
+
+        loadContent($content,"home");
+        //gestion des boutons de navigation
+        $(".nav li").click(function () {
+            var link = $(this).data("link");
+            var innerTarget = $(this).data("target");
+            loadContent($content, link, innerTarget);
+        })
+
+    });
+</script>
+</body>
+</html>
