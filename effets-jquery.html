@@ -1,0 +1,133 @@
+<!doctype html>
+
+<html>
+
+<head>
+    <title>Première page JQuery</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0">
+
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+
+    <style>
+        .bloc {
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            display: block;
+        }
+
+        .texte {
+            background-color: #0f0f0f;
+            color: #2bc7ee;
+        }
+
+
+    </style>
+</head>
+
+<body class="container-fluid">
+<button class="btn btn-primary" id="toggle-div">Masquer/Afficher</button>
+<button class="btn btn-primary" id="image-suivante">Suivant</button>
+<div class="row">
+
+    <div class="col-md-offset-3 col-md-6">
+        <img class="bloc" src="photos/photo-01.jpg">
+
+        <div id="message"></div>
+    </div>
+
+    <div class="col-md-offset-3 col-md-6 texte">
+        <h1>Un petit texte</h1>
+    </div>
+</div>
+
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        var nbImages = 9;
+        var imageEnCours = 1;
+
+        var photos = [];
+
+        for (var i = 1; i <= 9; i++) {
+            var img = new Image();
+            img.src = "photos/photo-0" + i + ".jpg";
+            photos.push(img);
+        }
+
+
+        function afficheImage(imgIndex) {
+            $(".bloc")
+                .fadeOut(500, function () {
+                    $(this).attr("src", photos[imgIndex].src)
+                })
+                .fadeIn(500, function () {
+                    $("#message").text(photos[imgIndex].src);
+                });
+
+        }
+
+        function imageSuivante() {
+            if (imageEnCours > nbImages) {
+                imageEnCours = 0;
+            } else {
+                imageEnCours++;
+            }
+
+            afficheImage(imageEnCours);
+        }
+
+        $("#image-suivante").click(imageSuivante);
+
+
+        $("#toggle-div").click(function () {
+            $(".bloc")
+                .animate(
+                    {
+                        width: "50%",
+                        height: "50%",
+                        opacity: ".5"
+                    },
+                    200
+                )
+                .animate(
+                    {
+                        width: "75%",
+                        height: "75%"
+                    },
+                    200
+                )
+                .animate(
+                    {
+                        width: "0%",
+                        height: "0%"
+                    },
+                    800
+                )
+        });
+
+        $(".texte").mouseover(function () {
+            console.log($(this));
+            $(this)
+                .animate(
+                    {
+                        width: "50%"
+                    },
+                    {queue: false, duration: 1000}
+                )
+                .animate(
+                    {
+                        left: "+=100px"
+                    },
+                    1000)
+        })
+    });
+
+</script>
+</body>
+
+</html>

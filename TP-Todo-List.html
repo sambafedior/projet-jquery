@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste de tache</title>
+
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+</head>
+<body class="container-fluid">
+
+<div class="row">
+
+    <div class="col-md-6 col-md-offset-3">
+
+        <form class="form-group" id="form">
+
+            <label for="tache">Tache</label>
+            <input type="text" id="tache" name="tache  ">
+            <button type="submit" class="btn btn-successt" id="valider">Valider</button>
+
+            <table class="table table-bordered table-responsive">
+
+                <thead>
+
+                <tr>
+                    <th>Tache</th>
+                    <th>Status</th>
+                </tr>
+
+                </thead>
+
+                <tbody id="listTache" class="tab-content">
+
+                <tr>
+
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+
+        var $valider = $("#valider");
+        var $tache = $("#tache");
+        var $listTache = $("#listTache");
+        var $form = $("#form");
+        var $tbody = $("tbody");
+        var $input = $("<input>");
+
+        $form.submit(function (addList) {
+            addList.preventDefault();
+            $listTache = "<tr><td>" + $tache.val() + "</td>";
+            $listTache += "<td><input type=\"checkbox\" name=\"listTache\">fait</td></tr>";
+            $tbody.append($listTache);
+        });
+
+        $tbody.delegate("input[type='checkbox']", 'click', function () {
+            var fait = ""
+
+            if ($(this).is(":checked")) {
+                $input.val('fait')
+            } else {
+                $input.val('Tache à faire')
+            }
+        });
+
+        $('input').focus(function () {
+            $(this).val('');
+        });
+
+        $tbody.delegate('input','click', function () {
+            var content = "<label>Nouveau paragraphe</label>";
+            $(this).after(content);
+        });
+
+
+
+        function addLocalStorage() {
+            for (i = 0; i < key.length; i++) {
+                if (window.localStorage) {
+                    var key = [i];
+                    var value = $tbody.val();
+                    localStorage.setItem(key, value);
+                    showLocalStorage();
+                }
+            }
+        }
+    })
+
+
+</script>
+
+</body>
+</html>

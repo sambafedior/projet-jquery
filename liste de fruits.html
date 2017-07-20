@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">        
+    </head>
+    <body>
+        <div class="form-group" class="col-md-6">
+            
+                <ul id="menu">
+                    <li class="list-group-item">fraise</li>
+                    <li class="list-group-item">banane</li>
+                    <li class="list-group-item">pomme
+                    </li>
+                    
+               
+                    
+                    <li class="list-group-item">poire</li>
+                </ul>
+
+                <ul>
+                    <li class="list-group-item">fraise</li>
+                    <li class="list-group-item">banane</li>
+                    <li class="list-group-item">pomme</li>
+                    <ul class="list-group">
+                        <li class="list-group">rouge</li>
+                        <li class="list-group">verte</li>
+                        <li class="list-group">petite</li>
+                    </ul>
+                    <li class="list-group-item">poire</li>
+                </ul>
+            
+        </div>
+
+        <script src="bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
+        <script src="bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+
+        <script>
+
+            $("ol").before("<li>" + "orange" + "</li><li>" + "pomme" + "</li>");
+          /*  $(document).ready(function ()
+            {
+                var $list = $("#list");
+                var $input = $("#inputText");
+                var $form = $("#Form");
+
+            }); */
+            //masquer les element des niveau
+            var $secondLevel = $("#menu");
+            var $firstLevel = $("menu>li");
+            $firstLevel.css("cursor","pointer")
+            $secondLevel.hide();
+
+            //affichage ou masquage des element des niveux
+            $firstLevel.click(function (e) {
+                $(this).children().toggle(100);
+            });
+
+        </script>
+    </body>
+</html>

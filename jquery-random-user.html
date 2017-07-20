@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>SPA Home</title>
+
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+
+    <style>
+        #photo {
+            width: 100%;
+        }
+
+        div {
+            background-color: #204d74;
+            color: #e8512c;
+        }
+
+        h2 {
+            color: #e8512c
+        }
+
+        label {
+            color: #c7ddef;
+        }
+
+        #nbUser {
+            color: black;
+        }
+
+        p{
+            color: #e8e8e8;
+        }
+
+        table {
+           mask-border-repeat:stretch ;
+        }
+
+        th{color: #e8e8e8;
+        }
+
+    </style>
+</head>
+<body class="container-fluid">
+
+<div class="row col-md-9" col-md-offset-3>
+
+    <div class="col-md-6 col-md-offset-3">
+        <form id="rechercher">
+
+
+            <div class="form-group">
+                <label for="sex" id="sex">sex</label>
+                <select name="gender" class="form-control">
+                    <option value="female">Féminin</option>
+                    <option value="male">Masculin</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="nbUser">Nombre d'utilisateur</label>
+                <input type="number" id="nbUser" name="results">
+
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-3">
+                    <label name="nat-fr" class="form-control" for="nat-fr">Français</label>
+                    <input type="checkbox" name="nat[]" value="fr" id="nat-fr">
+                </div>
+
+                <div class="col-md-3">
+                    <label name="nat-de" class="form-control" for="nat-de">Allemend</label>
+                    <input type="checkbox" name="nat[]" value="de" id="nat-de">
+                </div>
+
+                <div class="col-md-3">
+                    <label name="nat-en" class="form-control" for="nat-en">Anglais</label>
+                    <input type="checkbox" name="nat[]" value="en" id="nat-en">
+                </div>
+
+                <div class="col-md-3">
+                    <label name="nat-es" class="form-control" for="nat-es">Espagnol</label>
+                    <input type="checkbox" name="nat[]" value="es" id="nat-es">
+                </div>
+
+                <button type="submit" class="btn btn-block">Rechercher</button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <div class="col-sm-8 col-sm-offset-2">
+
+        <div id="user" class="row">
+            <div class="col-md-3">
+                <img id="photo" class="img-thumbnail">
+            </div>
+            <div class="col-md-5">
+                <h2>Nom</h2>
+                <p id="nom"></p>
+                <h2>Adresse</h2>
+                <p id="adresse"></p>
+                <h2>Tél</h2>
+                <p id="tel"></p>
+            </div>
+        </div>
+        <button id="next" class="btn btn-default">suivant</button>
+    </div>
+
+    <div class="col-sm-8 col-sm-offset-2">
+        <table class="table table-bordered table-striped" id="userTable">
+            <thead>
+            <th>photo</th>
+            <th>nom</th>
+
+            </thead>
+
+            <tbody id="UserList">
+
+
+            </tbody>
+
+        </table>
+
+    </div>
+</div>
+
+
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script>
+
+    function loadUser(params) {
+        var url = "https://randomuser.me/api";
+
+        if (params) {
+            url += "/?" + params;
+        }
+
+        $.get(url, function (response) {
+            console.log(response);
+            var data = response.results[0];
+
+            var name = data.name.title + " " + data.name.first + " " + data.name.last;
+            var address = data.location.street + "<br>"
+                + data.location.postcode + " " + data.location.city + "<br>"
+                + data.location.state;
+            var phones = data.phone + "<br>" + data.cell;
+
+            $("#photo").attr("src", data.picture.large);
+            $("#listPhoto").attr("src", data.picture.large);
+            $("#nom").html(name);
+            $("#adresse").html(address);
+            $("#tel").html(phones);
+
+        });
+    }
+
+    function loadUsers(params) {
+        var url = "https://randomuser.me/api";
+
+        if (params) {
+            url += "/?" + params;
+        }
+
+        $.get(url, function (response) {
+                console.log(response.results);
+                showUsers(response.results);
+
+            }
+        )
+        ;
+
+    }
+
+
+    function showUsers(data) {
+        console.log(data);
+
+        $tbody = $("#UserList").clone();
+
+        data.forEach(function (item) {
+            var $tr = $("<tr>");
+            var $photo = $("<img>").attr("src", item.picture.medium);
+            $tdPhoto = $("<td>").append($photo);
+            $tdPhoto.appendTo($tr);
+            $("<td>").text(item.name.first + " " + item.name.last).appendTo($tr);
+
+            $tr.appendTo($tbody);
+
+        })
+        $("#UserList").replaceWith($tbody);
+
+
+    }
+
+    function infiniteScroll() {
+        var $window = $(window);
+        if ($window.scrollTop() + $window.height() == $(document).height()) {
+
+        }
+
+    }
+
+
+    $(document).ready(function () {
+
+        $(window).scroll(infiniteScroll);
+
+        $("#rechercher").submit(function (e) {
+            e.preventDefault();
+            var data = $(this).serializeArray();
+            var gender = data[0].value;
+            var results = data[1].value;
+            var nat = data.map(function (item) {
+                if (item.name == "nat[]") {
+                    return item.value;
+                }
+            });
+            var params =
+                "gender=" + gender
+                + "&results=" + results
+                + "&nat="
+                + nat.join(",");
+
+            loadUsers(params);
+
+        });
+
+        $("#next").click(function () {
+            loadUser();
+            //loadUsers(params);
+        });
+
+    });
+
+</script>
+</body>
+</html>
