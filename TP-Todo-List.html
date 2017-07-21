@@ -24,8 +24,10 @@
                 <thead>
 
                 <tr>
+
                     <th>Tache</th>
                     <th>Status</th>
+
                 </tr>
 
                 </thead>
@@ -84,11 +86,10 @@
             $(this).val('');
         });
 
-        $tbody.delegate('input','click', function () {
+        $tbody.delegate('input', 'click', function () {
             var content = "<label>Nouveau paragraphe</label>";
-            $(this).after(content);
+            $(this).toggle(content);
         });
-
 
 
         function addLocalStorage() {

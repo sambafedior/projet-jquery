@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Single Page Application</title>
+
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="bower_components/select2/dist/css/select2.min.css">
+
+
+
+</head>
+<body class="container-fluid">
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <select id="languages" class="form-control" multiple>
+            <option>JavaScript</option>
+            <option>Java</option>
+            <option>C</option>
+            <option>C++</option>
+            <option>C#</option>
+            <option>PHP</option>
+            <option>Python</option>
+        </select>
+    </div>
+</div>
+
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>Language</th>
+        <th>Compilé</th>
+        <th>Difficulté</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>JavaScript</td>
+        <td>Non</td>
+        <td>3*</td>
+    </tr>
+    <tr>
+        <td>C++</td>
+        <td>Oui</td>
+        <td>4*</td>
+    </tr>
+    <tr>
+        <td>TypeScript</td>
+        <td>Non</td>
+        <td>3*</td>
+    </tr>
+    <tr>
+        <td>Java</td>
+        <td>Oui</td>
+        <td>5*</td>
+    </tr>
+    <tr>
+        <td>Python</td>
+        <td>Non</td>
+        <td>2*</td>
+    </tr>
+    </tbody>
+</table>
+
+<script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="bower_components/select2/dist/js/select2.min.js"></script>
+<script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+
+<script>
+    $("#languages").select2({
+        tags:true
+    });
+
+    $("table").dataTable();
+
+
+</script>
+</body>
+</html>
